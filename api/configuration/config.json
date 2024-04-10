@@ -1,0 +1,57 @@
+{
+  "Development": {
+    "FLASK_APP": "wsgi.py",
+    "FLASK_DEBUG": "development",
+    "DEBUG": true,
+    "TESTING": false,
+    "API_TITLE": "business_card",
+    "API_VERSION": "v1",
+    "OPENAPI_VERSION": "3.0.3",
+    "OPENAPI_JSON_PATH": "api-spec.json",
+    "OPENAPI_URL_PREFIX": "/",
+    "OPENAPI_SWAGGER_UI_PATH": "/swagger-ui",
+    "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
+    "OPENAPI_SWAGGER_UI_VERSION": "3.1.6",
+    "PROPAGATE_EXCEPTIONS": true,
+    "Authors": "Diiego300years",
+    "SECRET_KEY": "xxx"
+
+  },
+  "Testing": {
+    "FLASK_APP": "wsgi.py",
+    "FLASK_DEBUG": "testing",
+    "DEBUG": false,
+    "TESTING": true,
+    "SERVER_NAME": "127.0.0.1:5002",
+    "API_TITLE": "business_card Test",
+    "API_VERSION": "v1",
+    "OPENAPI_VERSION": "3.0.2",
+    "OPENAPI_JSON_PATH": "api-spec.json",
+    "OPENAPI_URL_PREFIX": "/",
+    "OPENAPI_SWAGGER_UI_PATH": "/swagger-ui",
+    "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
+    "OPENAPI_SWAGGER_UI_VERSION": "3.1.6",
+    "PROPAGATE_EXCEPTIONS": true,
+    "Authors": "Diiego300years",
+    "SECRET_KEY": "xxx"
+
+  },
+  "logging": {
+    "handlers": {
+      "debugHandler": {
+        "level": "DEBUG",
+        "file": "logs/debug_log.log",
+        "maxBytes": 1048576,
+        "backupCount": 15,
+        "formatter": "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"
+      },
+      "infoHandler": {
+        "level": "INFO",
+        "file": "logs/info_log.log",
+        "maxBytes": 1048576,
+        "backupCount": 10,
+        "formatter": "%(asctime)s %(levelname)s: %(message)s"
+      }
+    }
+  }
+}
