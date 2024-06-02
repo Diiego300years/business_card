@@ -1,0 +1,5 @@
+.idea
+venv_business/
+.dockerignore
+__pycache__
+.env
