@@ -10,7 +10,6 @@ from config import config
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 pagedown = PageDown()
-
 login_manager = LoginManager()
 # login_manager.login_view = 'auth.login'
 
@@ -22,7 +21,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
     bootstrap.init_app(app)
     pagedown.init_app(app)
-    csrf = CSRFProtect(app)
+    CSRFProtect(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
