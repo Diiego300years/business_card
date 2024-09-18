@@ -4,11 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_pagedown import PageDown
 from flask_wtf import CSRFProtect
+from flask_migrate import Migrate
 
 from config import config
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+migrate = Migrate()
+
 pagedown = PageDown()
 login_manager = LoginManager()
 # login_manager.login_view = 'auth.login'
@@ -20,7 +23,10 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     bootstrap.init_app(app)
+
     db.init_app(app)
+    migrate.init_app(app, db)
+
 
     pagedown.init_app(app)
     CSRFProtect(app)
