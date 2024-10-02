@@ -6,8 +6,14 @@ from flask_pagedown.fields import PageDownField
 
 class NameForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
-    surname = StringField('surname')
-    e_mail = StringField("e-mail", validators=[Email()])
+    e_mail = StringField("e-mail", validators=[Email(), DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class ProspectDataForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    e_mail = StringField("e-mail", validators=[Email(), DataRequired()])
+    message = StringField("message", validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
