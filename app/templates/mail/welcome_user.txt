@@ -1,0 +1,12 @@
+Witaj {{ user.name }},
+
+Dziękujemy za rejestrację na naszej stronie. Poniżej znajdują się Twoje dane:
+- Imię: {{ user.name }}
+- Email: {{ user.email }}
+- Wiadomość dla Ciebie: {{ user.message }}
+
+
+
+----------------
+Z pozdrowieniami,
+Twój jednosobowy zespół- Marcinek
