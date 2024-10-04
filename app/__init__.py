@@ -8,7 +8,10 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_moment import Moment
 from config import config
+from flask_bcrypt import Bcrypt
 
+
+bcrypt = Bcrypt()
 bootstrap = Bootstrap()
 mail = Mail()
 db = SQLAlchemy()
@@ -24,6 +27,7 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
+    bcrypt.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
