@@ -22,7 +22,6 @@ class Config:
         pass
 
 
-# TODO: Add real database paths to .env
 class DevelopmentConfig(Config):
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP=os.environ.get('FLASK_APP')

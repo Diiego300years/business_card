@@ -1,15 +1,17 @@
 import os
 from app import create_app, db
 from app.models.user import User
+from app.models.admin import Admin
+from app.models.user_base import UserBase
+from app.models.projects import MyProjects
 from flask_migrate import Migrate
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)
 
-#TODO: ADD OTHER models to Flask shell
 @app.shell_context_processor
-def make_shell_context():**********
- +-
+def make_shell_context():
+    return dict(db=db, User=User, Admin=Admin, UserBase=UserBase, MyProjects=MyProjects)
 
 @app.cli.command()
 def test():
