@@ -14,6 +14,16 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 
+    # docker postgres
+    POSTGRES_USER = os.environ.get('POSTGRES_USER')
+    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+    POSTGRES_DB = os.environ.get('POSTGRES_DB')
+    POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
+    POSTGRES_PORT = os.environ.get('POSTGRES_PORT')
+
+    DEV_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    SQLALCHEMY_DATABASE_URI = DEV_DATABASE_URL
+
     FLASKY_ADMIN = os.getenv("FLASKY_ADMIN")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -26,7 +36,9 @@ class DevelopmentConfig(Config):
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP=os.environ.get('FLASK_APP')
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+    #docker update
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+
     SQLALCHEMY_RECORD_QUERIES = True
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50

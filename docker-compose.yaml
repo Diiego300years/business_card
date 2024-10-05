@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: flask_app
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - backend
+
+  db:
+    image: postgres:13
+    container_name: flask_db
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com  # ustaw swój e-mail do logowania
+      PGADMIN_DEFAULT_PASSWORD: admin  # ustaw swoje hasło do logowania
+    ports:
+      - "5050:80"  # port pgAdmin dostępny w przeglądarce
+    depends_on:
+      - db
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
