@@ -1,0 +1,12 @@
+Hi administrator,
+
+You've got new client with question. Below I attached details:
+- Name: {{ user.name }}
+- Email: {{ user.email }}
+- Message for you: {{ user.message }}
+
+
+
+----------------
+Regards,
+Your system :)
