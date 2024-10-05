@@ -5,6 +5,7 @@ load_dotenv(os.path.join(os.getcwd(), '.env'))
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+#TODO: THINK ABOUT BETTER CONFIG
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     MAIL_SERVER = os.getenv('MAIL_SERVER')
@@ -14,13 +15,14 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 
-    # docker postgres
+    # docker postgres (it's useless feature imo but for now it's okay).
     POSTGRES_USER = os.environ.get('POSTGRES_USER')
     POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
     POSTGRES_DB = os.environ.get('POSTGRES_DB')
     POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
     POSTGRES_PORT = os.environ.get('POSTGRES_PORT')
 
+    # close your eyes please xd
     DEV_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
     SQLALCHEMY_DATABASE_URI = DEV_DATABASE_URL
 

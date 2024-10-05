@@ -1,5 +1,4 @@
 .idea
-.dockerignore
 __pycache__
 .env
 .flaskenv
