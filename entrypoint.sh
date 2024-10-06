@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Export environment variables from the .env file
 if [ -f .env ]; then

@@ -1,14 +1,19 @@
 Hi,
 you can follow my work with flask.
 
-Okay so if you'd like to start build app by run:
-docker compose up --build
-than in your project folder, type source ./your_venv/bin/activate
-flask db init
-flask db update -m "first docker update"
-flask db upgrade
+If you'd like to start playing with this app, build it. Firstly fill your .env based on sample_.env.
+<ul>Then you can run:
+<li>docker compose up --build</li>
+<li>docker exec -it flask_app /bin/bash</li>
+<li>flask db init </li>
+<li>flask db migrate -m "first docker update" </li>
+<li>flask db upgrade</li>
+</ul>
 
 It's for now   :)
 
-Have a good day!
+Your app is on localhost:5000
+Your pgadmin localhost:5050
+
+Have a good day! </br>
 Diiego300years

@@ -5,7 +5,6 @@ load_dotenv(os.path.join(os.getcwd(), '.env'))
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-#TODO: THINK ABOUT BETTER CONFIG
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     MAIL_SERVER = os.getenv('MAIL_SERVER')
@@ -14,17 +13,6 @@ class Config:
     MAIL_USE_TLS = os.getenv('MAIL_USE_TLS')
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-
-    # docker postgres (it's useless feature imo but for now it's okay).
-    POSTGRES_USER = os.environ.get('POSTGRES_USER')
-    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-    POSTGRES_DB = os.environ.get('POSTGRES_DB')
-    POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
-    POSTGRES_PORT = os.environ.get('POSTGRES_PORT')
-
-    # close your eyes please xd
-    DEV_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-    SQLALCHEMY_DATABASE_URI = DEV_DATABASE_URL
 
     FLASKY_ADMIN = os.getenv("FLASKY_ADMIN")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -39,15 +27,13 @@ class DevelopmentConfig(Config):
     FLASK_APP=os.environ.get('FLASK_APP')
 
     #docker update
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
 
     SQLALCHEMY_RECORD_QUERIES = True
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50
     FLASKY_COMMENTS_PER_PAGE = 30
     FLASKY_SLOW_DB_QUERY_TIME = 0.5
-
-
 
 class TestingConfig(Config):
     TESTING = True
@@ -57,6 +43,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
     MAIL_SERVER = os.getenv('PROD_MAIL_SERVER')
     MAIL_PORT = os.getenv('PROD_MAIL_PORT')
     FLASKY_MAIL_SENDER = os.getenv("PROD_FLASKY_MAIL_SENDER")
@@ -70,9 +57,26 @@ class ProductionConfig(Config):
     #     Config.init_app(app)
 
 
+########################################## Docker ###############################################
+
+class DevelopmentConfigWithDocker(Config):
+    FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
+    FLASK_APP=os.environ.get('FLASK_APP')
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
+
+class TestingConfigWithDocker(Config):
+    FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
+    FLASK_APP = os.environ.get('FLASK_APP')
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_TEST_SQLALCHEMY_DATABASE_URI')
+
+
+
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
-    'default': DevelopmentConfig
+    'default': DevelopmentConfigWithDocker,
+    'developmentWithDocker': DevelopmentConfigWithDocker
 }

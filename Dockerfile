@@ -1,8 +1,6 @@
-FROM ubuntu:latest
-LABEL authors="diego"
-
-
 FROM python:3.11-slim
+
+LABEL authors="diego"
 
 # Set the working directory in the container
 WORKDIR /app
@@ -23,11 +21,4 @@ EXPOSE 5000
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-# Copy the entrypoint script
-COPY entrypoint.sh .
-
-# Make entrypoint script executable
-RUN chmod +x entrypoint.sh
-
-# Set the entrypoint
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["flask", "run", "--host=0.0.0.0"]

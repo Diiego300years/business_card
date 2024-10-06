@@ -26,10 +26,6 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - backend
-    environment:
-      - POSTGRES_DB = business_card_database
-      - POSTGRES_USER = admin
-      - POSTGRES_PASSWORD = admin
 
   pgadmin:
     image: dpage/pgadmin4
