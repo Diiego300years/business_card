@@ -38,19 +38,19 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
-    WTF_CSRF_ENABLED = False
+    # WTF_CSRF_ENABLED = False
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
-    MAIL_SERVER = os.getenv('PROD_MAIL_SERVER')
-    MAIL_PORT = os.getenv('PROD_MAIL_PORT')
-    FLASKY_MAIL_SENDER = os.getenv("PROD_FLASKY_MAIL_SENDER")
-    MAIL_USERNAME = os.getenv('PROD_MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('PROD_MAIL_PASSWORD')
+    MAIL_SERVER = os.environ.get('PROD_MAIL_SERVER')
+    MAIL_PORT =  os.environ.get('PROD_MAIL_PORT')
+    FLASKY_MAIL_SENDER = os.environ.get("PROD_FLASKY_MAIL_SENDER")
+    MAIL_USERNAME =  os.environ.get('PROD_MAIL_USERNAME')
+    MAIL_PASSWORD =  os.environ.get('PROD_MAIL_PASSWORD')
 
-    FLASKY_ADMIN = os.getenv("PROD_FLASKY_ADMIN")
+    FLASKY_ADMIN =  os.environ.get("PROD_FLASKY_ADMIN")
 
     # @classmethod
     # def init_app(cls, app):
@@ -61,11 +61,12 @@ class ProductionConfig(Config):
 
 class DevelopmentConfigWithDocker(Config):
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
-    FLASK_APP=os.environ.get('FLASK_APP')
+    FLASK_APP = os.environ.get('FLASK_APP')
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
 
 class TestingConfigWithDocker(Config):
+    TESTING = True
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
 
@@ -78,5 +79,6 @@ config = {
     'testing': TestingConfig,
     'production': ProductionConfig,
     'default': DevelopmentConfigWithDocker,
-    'developmentWithDocker': DevelopmentConfigWithDocker
+    'developmentWithDocker': DevelopmentConfigWithDocker,
+    'testingConfigWithDocker': TestingConfigWithDocker
 }
