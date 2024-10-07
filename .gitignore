@@ -1,7 +1,7 @@
 .idea
-.dockerignore
 __pycache__
 .env
 .flaskenv
 migrations
 .venv_business
+.env.test
