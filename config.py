@@ -42,6 +42,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    FLASK_ENV = 'production'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     MAIL_SERVER = os.environ.get('PROD_MAIL_SERVER')
@@ -60,12 +61,16 @@ class ProductionConfig(Config):
 ########################################## Docker ###############################################
 
 class DevelopmentConfigWithDocker(Config):
+    FLASK_ENV = 'development'
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
 
 class TestingConfigWithDocker(Config):
+    FLASK_ENV = 'testing'
+
+    # true for turn off errors handling
     TESTING = True
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
