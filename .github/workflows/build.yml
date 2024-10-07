@@ -66,6 +66,9 @@ jobs:
           echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env.test
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env.test
           
+      - name: is created?
+        run: |
+          ls -la
 
       - name: Install Docker Compose
         run: |
