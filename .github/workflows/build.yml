@@ -13,6 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # set ups for login
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -25,6 +26,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+
+        # building images for tests, and pushing them
       - name: Build and push flask_app image
         uses: docker/build-push-action@v4
         with:
