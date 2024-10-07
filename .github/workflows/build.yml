@@ -65,4 +65,16 @@ jobs:
             POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
             POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
+      - name: Start services
+        run: docker-compose up -d flask_app flask_db_test
+
+      - name: Wait for services to be ready
+        run: sleep 15
+
+      - name: Run tests
+        run: docker exec -it flask_app flask test
+
+      - name: Tear down services
+        run: docker-compose down
+
 
