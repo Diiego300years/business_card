@@ -34,23 +34,6 @@ jobs:
           context: .
           push: true
           tags: diiego300years/business_card_app:latest
-          build-args: | # Here we pass environment variables as build arguments
-            FLASK_APP: ${{ secrets.FLASK_APP }}
-            SQLALCHEMY_DATABASE_URI: ${{ secrets.TEST_DB_URI }}
-            FLASK_DEBUG: ${{ secrets.FLASK_DEBUG }}
-
-            SECRET_KEY: ${{ secrets.SECRET_KEY }}
-            MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
-            MAIL_PORT: ${{ secrets.MAIL_PORT }}
-            FLASKY_MAIL_SENDER: ${{ secrets.FLASKY_MAIL_SENDER }}
-            MAIL_USE_TLS: ${{ secrets.MAIL_USE_TLS }}
-            MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-            MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-            FLASKY_ADMIN: ${{ secrets.FLASKY_ADMIN }}
-            FLASK_CONFIG: ${{ secrets.FLASK_CONFIG }}
-            FLASK_APP_NAME: ${{ secrets.FLASK_APP_NAME }}
-
-
 
       - name: Build and push db_test image
         uses: docker/build-push-action@v4
@@ -58,25 +41,47 @@ jobs:
           context: ./db_test
           push: true
           tags: diiego300years/db_test_business_card:latest
-          build-args: | # Here we pass environment variables as build arguments
-            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-            POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
-      # Let's try to install docker-compose
-      - name: Install Docker Compose
+      - name: Run container and create .env file
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
+          docker run -d --name flask_app_container \
+            diiego300years/business_card_app:latest
 
-      - name: Start services
-        run: docker-compose up -d flask_app flask_db_test
+          # Stwórz plik .env w katalogu aplikacji
+          docker exec flask_app_container sh -c "echo 'FLASK_APP=${{ secrets.FLASK_APP }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'SQLALCHEMY_DATABASE_URI=${{ secrets.TEST_DB_URI }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'FLASK_DEBUG=${{ secrets.FLASK_DEBUG }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'SECRET_KEY=${{ secrets.SECRET_KEY }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'MAIL_SERVER=${{ secrets.MAIL_SERVER }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'MAIL_PORT=${{ secrets.MAIL_PORT }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'FLASKY_MAIL_SENDER=${{ secrets.FLASKY_MAIL_SENDER }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'MAIL_USE_TLS=${{ secrets.MAIL_USE_TLS }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'FLASKY_ADMIN=${{ secrets.FLASKY_ADMIN }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'FLASK_CONFIG=${{ secrets.FLASK_CONFIG }}' >> /app/.env"
+          docker exec flask_app_container sh -c "echo 'FLASK_APP_NAME=${{ secrets.FLASK_APP_NAME }}' >> /app/.env"
 
-      - name: Wait for services to be ready
-        run: sleep 15
+      - name: Verify container is running
+        run: docker ps
+
+      - name: Run db_test container and create .env file
+        run: |
+          docker run -d --name db_test_container \
+            diiego300years/db_test_business_card:latest
+
+          # Stwórz plik .env w katalogu aplikacji (w tym przypadku dla db_test)
+          docker exec db_test_container sh -c "echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /app/.env"
+          docker exec db_test_container sh -c "echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /app/.env"
+          docker exec db_test_container sh -c "echo 'POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}' >> /app/.env"
+          docker exec db_test_container sh -c "echo 'POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}' >> /app/.env"
+          docker exec db_test_container sh -c "echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /app/.env"
+
+          # Sprawdzenie zawartości pliku .env
+          docker exec db_test_container cat /app/.env
+
+      - name: Verify container is running
+        run: docker ps
 
       - name: Run tests
         run: docker exec -it flask_app flask test
