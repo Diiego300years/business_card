@@ -65,6 +65,13 @@ jobs:
             POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
             POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
+      # Let's try to install docker-compose
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
       - name: Start services
         run: docker-compose up -d flask_app flask_db_test
 
