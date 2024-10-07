@@ -73,8 +73,11 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
+      - name: check containers
+        run: docker ps -a
+
       - name: Start services with Docker Compose and .env
-        run: docker-compose up --build
+        run: docker-compose build
 
       - name: Verify container is running
         run: docker ps
