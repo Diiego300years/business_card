@@ -77,7 +77,7 @@ jobs:
         run: docker ps -a; docker-compose config
 
       - name: Start services with Docker Compose and .env
-        run: docker-compose build
+        run: docker-compose up app db_test
 
       - name: Verify container is running
         run: docker ps -a; docker-compose config
