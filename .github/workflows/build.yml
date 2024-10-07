@@ -74,13 +74,13 @@ jobs:
           docker-compose --version
 
       - name: check containers
-        run: docker ps -a
+        run: docker ps -a; docker-compose config
 
       - name: Start services with Docker Compose and .env
         run: docker-compose build
 
       - name: Verify container is running
-        run: docker ps
+        run: docker ps -a; docker-compose config
 
       - name: Run tests
         run: docker exec flask_app flask test
