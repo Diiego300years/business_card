@@ -44,23 +44,23 @@ jobs:
 
       - name: Run container and create .env file
         run: |
-          docker run -d --name flask_db \
+          docker run -d --name flask_app \
             diiego300years/business_card_app:latest
 
           # Stwórz plik .env w katalogu aplikacji
-          docker exec flask_app_container sh -c "echo 'FLASK_APP=${{ secrets.FLASK_APP }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'SQLALCHEMY_DATABASE_URI=${{ secrets.TEST_DB_URI }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'FLASK_DEBUG=${{ secrets.FLASK_DEBUG }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'SECRET_KEY=${{ secrets.SECRET_KEY }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'MAIL_SERVER=${{ secrets.MAIL_SERVER }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'MAIL_PORT=${{ secrets.MAIL_PORT }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'FLASKY_MAIL_SENDER=${{ secrets.FLASKY_MAIL_SENDER }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'MAIL_USE_TLS=${{ secrets.MAIL_USE_TLS }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'FLASKY_ADMIN=${{ secrets.FLASKY_ADMIN }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'FLASK_CONFIG=${{ secrets.FLASK_CONFIG }}' >> /app/.env"
-          docker exec flask_app_container sh -c "echo 'FLASK_APP_NAME=${{ secrets.FLASK_APP_NAME }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASK_APP=${{ secrets.FLASK_APP }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'SQLALCHEMY_DATABASE_URI=${{ secrets.TEST_DB_URI }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASK_DEBUG=${{ secrets.FLASK_DEBUG }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'SECRET_KEY=${{ secrets.SECRET_KEY }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'MAIL_SERVER=${{ secrets.MAIL_SERVER }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'MAIL_PORT=${{ secrets.MAIL_PORT }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASKY_MAIL_SENDER=${{ secrets.FLASKY_MAIL_SENDER }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'MAIL_USE_TLS=${{ secrets.MAIL_USE_TLS }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASKY_ADMIN=${{ secrets.FLASKY_ADMIN }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASK_CONFIG=${{ secrets.FLASK_CONFIG }}' >> /app/.env"
+          docker exec flask_app sh -c "echo 'FLASK_APP_NAME=${{ secrets.FLASK_APP_NAME }}' >> /app/.env"
 
       - name: Verify container is running
         run: docker ps
@@ -71,11 +71,11 @@ jobs:
             diiego300years/db_test_business_card:latest
 
           # Stwórz plik .env w katalogu aplikacji (w tym przypadku dla db_test)
-          docker exec db_test_container sh -c "echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /app/.env"
-          docker exec db_test_container sh -c "echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /app/.env"
-          docker exec db_test_container sh -c "echo 'POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}' >> /app/.env"
-          docker exec db_test_container sh -c "echo 'POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}' >> /app/.env"
-          docker exec db_test_container sh -c "echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /app/.env"
+          docker exec flask_db_test sh -c "echo 'POSTGRES_USER=${{ secrets.POSTGRES_USER }}' >> /app/.env"
+          docker exec flask_db_test sh -c "echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> /app/.env"
+          docker exec flask_db_test sh -c "echo 'POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}' >> /app/.env"
+          docker exec flask_db_test sh -c "echo 'POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}' >> /app/.env"
+          docker exec flask_db_test sh -c "echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> /app/.env"
 
           # Sprawdzenie zawartości pliku .env
           docker exec db_test_container cat /app/.env
