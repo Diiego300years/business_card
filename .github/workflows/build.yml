@@ -66,9 +66,9 @@ jobs:
           echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env.test
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env.test
           
-      - name: is created?
-        run: |
-          ls -la
+#      - name: is created?
+#        run: |
+#          ls -la
 
       - name: Install Docker Compose
         run: |
@@ -76,11 +76,11 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      - name: check containers
-        run: docker ps -a; docker-compose config
+#      - name: check containers
+#        run: docker ps -a; docker-compose config
 
-      - name: Start services with Docker Compose and .env
-        run: docker-compose up app; docker-compose up db_test
+      - name: Start app service
+        run: docker-compose up -d app db_test;
 
       - name: Verify container is running
         run: docker ps -a; docker-compose config
