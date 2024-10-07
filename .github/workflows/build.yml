@@ -34,7 +34,7 @@ jobs:
           context: .
           push: true
           tags: diiego300years/business_card_app:latest
-          build-args: # Here we pass environment variables as build arguments
+          build-args: | # Here we pass environment variables as build arguments
             FLASK_APP: ${{ secrets.FLASK_APP }}
             SQLALCHEMY_DATABASE_URI: ${{ secrets.TEST_DB_URI }}
             FLASK_DEBUG: ${{ secrets.FLASK_DEBUG }}
@@ -58,7 +58,7 @@ jobs:
           context: ./db_test
           push: true
           tags: diiego300years/db_test_business_card:latest
-          build-args: # Here we pass environment variables as build arguments
+          build-args: | # Here we pass environment variables as build arguments
             POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
             POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
