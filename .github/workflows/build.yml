@@ -44,7 +44,7 @@ jobs:
 
       - name: Run container and create .env file
         run: |
-          docker run -d --name flask_app_container \
+          docker run -d --name flask_db \
             diiego300years/business_card_app:latest
 
           # Stwórz plik .env w katalogu aplikacji
@@ -67,7 +67,7 @@ jobs:
 
       - name: Run db_test container and create .env file
         run: |
-          docker run -d --name db_test_container \
+          docker run -d --name flask_db_test \
             diiego300years/db_test_business_card:latest
 
           # Stwórz plik .env w katalogu aplikacji (w tym przypadku dla db_test)
