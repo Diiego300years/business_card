@@ -1,21 +1,23 @@
 version: '3.8'
 
 services:
+  # app's container
   app:
-    build: .
+    build:
+      context: .
     container_name: flask_app
     ports:
       - '5000:5000'
     env_file:
       - .env
     depends_on:
-      - db
       - db_test
     volumes:
       - .:/app
     networks:
       - backend
 
+  # dev db
   db:
     image: postgres:13
     container_name: flask_db
@@ -28,6 +30,7 @@ services:
     networks:
       - backend
 
+  # for better visualisation
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -37,17 +40,20 @@ services:
       - "5050:80"  # pgAdmin's port
     depends_on:
       - db
-      - db_test
     networks:
       - backend
 
+  # it's taking Dockerfile from .db_test. folder
   db_test:
-    image: postgres:13
+    build:
+      context: ./db_test/
     container_name: flask_db_test
     ports:
       - "5435:5432"
     env_file:
       - .env.test
+
+    # Remember about different volumes for different db used in project
     volumes:
       - db_test_data:/var/lib/postgresql/data
     networks:

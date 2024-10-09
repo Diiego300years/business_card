@@ -7,14 +7,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    MAIL_SERVER = os.getenv('MAIL_SERVER')
-    MAIL_PORT = os.getenv('MAIL_PORT')
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = os.environ.get('MAIL_PORT')
     FLASKY_MAIL_SENDER = os.getenv("FLASKY_MAIL_SENDER")
-    MAIL_USE_TLS = os.getenv('MAIL_USE_TLS')
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
-    FLASKY_ADMIN = os.getenv("FLASKY_ADMIN")
+    FLASKY_ADMIN = os.environ.get("FLASKY_ADMIN")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
@@ -42,6 +42,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    FLASK_ENV = 'production'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     MAIL_SERVER = os.environ.get('PROD_MAIL_SERVER')
@@ -60,12 +61,16 @@ class ProductionConfig(Config):
 ########################################## Docker ###############################################
 
 class DevelopmentConfigWithDocker(Config):
+    FLASK_ENV = 'development'
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
 
 class TestingConfigWithDocker(Config):
+    FLASK_ENV = 'testing'
+
+    # true for turn off errors handling
     TESTING = True
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
