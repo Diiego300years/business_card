@@ -54,6 +54,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Pull flask_app image
+        run: docker pull diiego300years/business_card_app:latest
+
+      - name: Pull db_test image
+        run: docker pull diiego300years/db_test_business_card:latest
+
 # I used python-dotenv in project that's why.
       - name: Create .env file for app service.
         run: |
