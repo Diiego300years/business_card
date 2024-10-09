@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # It's similar like depends_on in docker-compose
-    needs: test
+    needs: tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
