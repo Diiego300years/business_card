@@ -7,7 +7,7 @@ on:
       - BC-6
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       # clone my code from repo
@@ -50,8 +50,9 @@ jobs:
           tags: diiego300years/db_test_business_card:latest
 
 # I defined new job for make this process faster.
-  tests:
+  test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
 # I used python-dotenv in project that's why.
       - name: Create .env file for app service.
@@ -107,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # It's similar like depends_on in docker-compose
-    needs: tests
+    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
