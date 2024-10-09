@@ -34,20 +34,25 @@ jobs:
 
         # Building images for tests, and pushing them to dockerHub.
         # For now, my app_project is private in docker-hub, but open-source in GitHub  :)
-      - name: Build and push flask_app image
+      - name: Build flask_app image
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true
+          # don't send before tests cases.
+          push: false
           tags: diiego300years/business_card_app:latest
 
       - name: Build and push db_test image
         uses: docker/build-push-action@v4
         with:
           context: ./db_test
-          push: true
+          push: false
           tags: diiego300years/db_test_business_card:latest
 
+# I defined new job for make this process faster.
+  tests:
+    runs-on: ubuntu-latest
+    steps:
 # I used python-dotenv in project that's why.
       - name: Create .env file for app service.
         run: |
@@ -88,7 +93,7 @@ jobs:
       - name: Migrate db
         run: docker exec flask_app flask db migrate -m "docker test migrations"
 
-# I think in db init it's safe to don't check migrations/versions/version.py file
+  # I think in db init it's safe to don't check migrations/versions/version.py file
       - name: Upgrade db
         run: docker exec flask_app flask db upgrade
 
@@ -98,4 +103,31 @@ jobs:
       - name: Tear down services
         run: docker-compose down
 
+  deploy:
+    runs-on: ubuntu-latest
 
+    # It's similar like depends_on in docker-compose
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push flask_app image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: diiego300years/business_card_app:latest
+
+      - name: Push db_test image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./db_test
+          push: true
+          tags: diiego300years/db_test_business_card:latest
