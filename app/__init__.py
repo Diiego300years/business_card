@@ -9,6 +9,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from config import config
 from flask_bcrypt import Bcrypt
+import os
 
 
 bcrypt = Bcrypt()
@@ -23,6 +24,7 @@ login_manager = LoginManager()
 
 # I decided to use several configuration sets
 def create_app(config_name):
+    config_name = os.getenv('FLASK_CONFIG', 'default')
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
@@ -39,3 +41,6 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     return app
+
+
+# application = create_app(config_name='default')
