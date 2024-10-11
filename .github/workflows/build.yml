@@ -4,7 +4,7 @@ on:
   push:
     # in testing case I use only BC-6
     branches:
-      - BC-6
+      - BC-7
 
 jobs:
   build:
