@@ -24,5 +24,5 @@ class FlaskSimpleTestCase(unittest.TestCase):
 
     def test_app_is_testing(self):
         # print(current_app.config)
-        self.assertTrue(current_app.config['TESTING'])
+        self.assertTrue(current_app.config['production'])
 
