@@ -21,4 +21,6 @@ EXPOSE 5000
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
+ENTRYPOINT ["/entrypoint.sh"]
+
 CMD ["flask", "run", "--host=0.0.0.0"]

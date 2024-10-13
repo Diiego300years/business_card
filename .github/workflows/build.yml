@@ -108,7 +108,6 @@ jobs:
           docker ps
           echo "nw czy działa"
           docker ps -a
-          docker exec -it flask_app /bin/bash
           ls
           docker exec flask_app flask db init
           docker exec flask_app flask db migrate -m "docker test migrations"
