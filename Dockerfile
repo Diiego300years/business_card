@@ -19,7 +19,7 @@ COPY entrypoint.sh /entrypoint.sh
 # Make my script executable
 RUN chmod +x /entrypoint.sh
 
-# Expose port 5000 (or the port your Flask app runs on)
+# Expose app port
 EXPOSE 5000
 
 # Set environment variables
