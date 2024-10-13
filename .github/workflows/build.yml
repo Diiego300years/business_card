@@ -102,17 +102,6 @@ jobs:
       - name: Start app
         run: docker-compose up -d app;
 
-
-      - name: Init and migrate db an in Readme
-        run: |
-          docker ps
-          echo "nw czy działa"
-          docker ps -a
-          ls
-          docker exec flask_app flask db init
-          docker exec flask_app flask db migrate -m "docker test migrations"
-          docker exec flask_app flask db upgrade
-
       - name: Run tests
         run: docker exec flask_app flask test
 
