@@ -99,6 +99,9 @@ jobs:
       - name: Start app and db_test services
         run: docker-compose up -d app db_test;
 
+      - name: Wait for db to be ready
+        run: sleep 5
+
       - name: Init and migrate db an in Readme
         run: |
           docker ps
