@@ -13,9 +13,17 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">Home</a>
-            {<a class="navbar-brand" href="/projects">My projects</a>%}
+            <a class="navbar-brand" href="/projects">My projects</a>%}
             <a class="navbar-brand" href="/contact">Contact form</a>
         </div>
+
+{#    login form below#}
+         <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 {% endblock %}
