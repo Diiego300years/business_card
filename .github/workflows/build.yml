@@ -46,7 +46,7 @@ jobs:
           push: false
           tags: diiego300years/business_card_app:latest
 
-      - name: Build and push db_test image
+      - name: Build db_test image
         uses: docker/build-push-action@v4
         with:
           context: ./db_test
@@ -102,12 +102,12 @@ jobs:
       - name: Start app
         run: docker-compose up -d app;
 
-      - name: Wait for db to be ready
-        run: sleep 5
 
       - name: Init and migrate db an in Readme
         run: |
           docker ps
+          echo "nw czy działa"
+          docker ps -a
           docker exec flask_app flask db init
           docker exec flask_app flask db migrate -m "docker test migrations"
           docker exec flask_app flask db upgrade
