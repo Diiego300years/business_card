@@ -96,8 +96,11 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      - name: Start app and db_test services
-        run: docker-compose up -d app db_test;
+      - name: Start db_test service
+        run: docker-compose up -d db_test
+
+      - name: Start app
+        run: docker-compose up -d app;
 
       - name: Wait for db to be ready
         run: sleep 5
