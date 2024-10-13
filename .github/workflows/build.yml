@@ -97,10 +97,10 @@ jobs:
           docker-compose --version
 
       - name: Start db_test service
-        run: docker-compose up -d app
+        run: docker-compose up -d db_test
 
       - name: Start app
-        run: docker-compose up -d db_test;
+        run: docker-compose up -d app;
 
 
       - name: Init and migrate db an in Readme
