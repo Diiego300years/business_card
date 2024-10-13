@@ -20,7 +20,7 @@ migrate = Migrate()
 moment = Moment()
 pagedown = PageDown()
 login_manager = LoginManager()
-# login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth.login'
 
 # I decided to use several configuration sets
 def create_app(config_name):
@@ -30,6 +30,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     bcrypt.init_app(app)
+    login_manager.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)

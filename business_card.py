@@ -11,7 +11,7 @@ sys.path.append(os.getcwd())
 
 load_dotenv()
 
-application = create_app(config_name='production')
+application = create_app(config_name='default')
 migrate = Migrate(application, db)
 
 @application.shell_context_processor
