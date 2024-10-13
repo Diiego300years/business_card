@@ -101,6 +101,7 @@ jobs:
 
       - name: Init and migrate db an in Readme
         run: |
+          docker ps
           docker exec flask_app flask db init
           docker exec flask_app flask db migrate -m "docker test migrations"
           docker exec flask_app flask db upgrade
