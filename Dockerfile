@@ -14,11 +14,17 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY app/ ./app/
 COPY config.py .
+COPY entrypoint.sh /entrypoint.sh
 
-# Expose port 5000 (or the port your Flask app runs on)
+# Make my script executable
+RUN chmod +x /entrypoint.sh
+
+# Expose app port
 EXPOSE 5000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["flask", "run", "--host=0.0.0.0"]

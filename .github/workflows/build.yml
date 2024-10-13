@@ -4,7 +4,7 @@ on:
   push:
     # in testing case I use only BC-6
     branches:
-      - BC-6
+      - BC-7
 
 jobs:
   build:
@@ -41,15 +41,20 @@ jobs:
         with:
           context: .
           # don't send before tests cases.
+          cache-from: type=gha
+          cache-to: type=gha, mode=max
           push: false
           tags: diiego300years/business_card_app:latest
 
-      - name: Build and push db_test image
+      - name: Build db_test image
         uses: docker/build-push-action@v4
         with:
           context: ./db_test
           push: false
           tags: diiego300years/db_test_business_card:latest
+          # Cache for dependencies and layers
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
 # I defined new job for make this process faster.
   test:
@@ -59,18 +64,6 @@ jobs:
       # clone my code from repo
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Pull flask_app image
-        run: docker pull diiego300years/business_card_app:latest
-
-      - name: Pull db_test image
-        run: docker pull diiego300years/db_test_business_card:latest
 
 # I used python-dotenv in project that's why.
       - name: Create .env file for app service.
@@ -103,24 +96,18 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      - name: Start app and db_test services
-        run: docker-compose up -d app db_test;
+      - name: Start db_test service
+        run: docker-compose up -d db_test
 
-      - name: Init db as in README.md
-        run: docker exec flask_app flask db init
-
-      - name: Migrate db
-        run: docker exec flask_app flask db migrate -m "docker test migrations"
-
-  # I think in db init it's safe to don't check migrations/versions/version.py file
-      - name: Upgrade db
-        run: docker exec flask_app flask db upgrade
+      - name: Start app
+        run: docker-compose up -d app;
 
       - name: Run tests
         run: docker exec flask_app flask test
 
       - name: Tear down services
         run: docker-compose down
+
 
   deploy:
     runs-on: ubuntu-latest

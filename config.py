@@ -43,7 +43,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     FLASK_ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    FLASK_APP=os.environ.get('FLASK_APP')
 
     MAIL_SERVER = os.environ.get('PROD_MAIL_SERVER')
     MAIL_PORT =  os.environ.get('PROD_MAIL_PORT')
@@ -52,6 +52,8 @@ class ProductionConfig(Config):
     MAIL_PASSWORD =  os.environ.get('PROD_MAIL_PASSWORD')
 
     FLASKY_ADMIN =  os.environ.get("PROD_FLASKY_ADMIN")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('PROD_DATABASE_URL')
+
 
     # @classmethod
     # def init_app(cls, app):
