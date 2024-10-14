@@ -4,12 +4,11 @@
 if [ ! -d "./migrations" ]; then
   echo "Folder 'migrations' doesn't exist, I'm starting init..."
   flask db init
+  flask db migrate -m "docker test migrations"
 else
   echo "Folder called 'migrations' exist."
 fi
 
-# Uruchom migracje i aktualizację bazy danych
-flask db migrate -m "docker test migrations"
 flask db upgrade
 
 # Uruchomienie aplikacji Flask

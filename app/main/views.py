@@ -10,14 +10,22 @@ from datetime import datetime
 # home root for about me probably
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('base.html')
+    """
+    Renders the home page (index.html).
+
+    :return: Rendered template for the home page.
+    """
+    return render_template('index.html')
 
 
 # here I'll need to list github projects
 @main.route('/projects', methods=['GET', 'POST'])
 def handle_projects():
     """
-    :return: view with my projects listed
+    Renders the projects page, listing the user's projects.
+    The user's name is retrieved from the session.
+
+    :return: Rendered template for the projects page with the user's name.
     """
     user_name = session.get('name')
     return render_template('projects.html', name=user_name)
@@ -26,6 +34,13 @@ def handle_projects():
 # simple endpoint for try flash()
 @main.route("/try_flash", methods=['GET', 'POST'])
 def check_name():
+    """
+    Handles form submission to update the user's name in the session.
+    Flashes a message if the name is changed.
+
+    :return: If form is submitted and valid, redirects to the same page. Otherwise, renders the form.
+
+    """
     form = NameForm()
 
     if form.validate_on_submit():
@@ -45,7 +60,11 @@ def check_name():
 @main.route("/contact", methods=['GET', 'POST'])
 def contact_handle():
     """
-    :return: Redirect after POST pattern
+    Handles the contact form submission, stores a new user in the database if they don't exist,
+    and sends an email to the user and admin. Updates session with the user's name and status.
+
+    :return: If form is submitted and valid, redirects to the same page.
+    Otherwise, renders the contact form with current data.
     """
     form = ProspectDataForm()
     if form.validate_on_submit():
@@ -77,6 +96,7 @@ def contact_handle():
                            'mail/new_user',
                            user=user)
         else:
+            #TODO: It's useless for now. I must change it
             session['known'] = True
 
         session['name'] = form.name.data
@@ -85,9 +105,8 @@ def contact_handle():
 
     # TODO: Think about what should I do with session['name']
     # print(session['name'])
-    return render_template('index.html',
+    return render_template('contact.html',
                            form=form,
                            name=session.get('name'),
-                           known=session.get('known', False),
                            current_time=datetime.utcnow())
 
