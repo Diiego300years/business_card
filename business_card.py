@@ -1,4 +1,3 @@
-import os
 from app import create_app, db
 from app.models.user import User
 from app.models.admin import Admin

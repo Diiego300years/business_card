@@ -10,14 +10,17 @@ from flask_moment import Moment
 from config import config
 from flask_bcrypt import Bcrypt
 import os
+from flask_jwt_extended import JWTManager
 
 
+jwt = JWTManager()
 bcrypt = Bcrypt()
 bootstrap = Bootstrap()
 mail = Mail()
 db = SQLAlchemy()
 migrate = Migrate()
 moment = Moment()
+csrf = CSRFProtect()
 pagedown = PageDown()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -30,13 +33,15 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     bcrypt.init_app(app)
+    moment.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     pagedown.init_app(app)
-    CSRFProtect(app)
+    csrf.init_app(app)
+    jwt.init_app(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

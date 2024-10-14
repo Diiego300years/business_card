@@ -63,7 +63,7 @@ class ProductionConfig(Config):
 ########################################## Docker ###############################################
 
 class DevelopmentConfigWithDocker(Config):
-    FLASK_ENV = 'development'
+    FLASK_ENV = 'default'
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
 
