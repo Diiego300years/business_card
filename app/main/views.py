@@ -32,27 +32,27 @@ def handle_projects():
 
 
 # simple endpoint for try flash()
-@main.route("/try_flash", methods=['GET', 'POST'])
-def check_name():
-    """
-    Handles form submission to update the user's name in the session.
-    Flashes a message if the name is changed.
-
-    :return: If form is submitted and valid, redirects to the same page. Otherwise, renders the form.
-
-    """
-    form = NameForm()
-
-    if form.validate_on_submit():
-        old_name = session.get('name')
-
-        if old_name is not None and old_name != form.name.data:
-            flash("Well, that's new name")
-
-        session['name'] = form.name.data
-        return redirect(url_for('main.check_name'))
-
-    return render_template('index_dwa.html', form=form, name=session.get('name'))
+# @main.route("/try_flash", methods=['GET', 'POST'])
+# def check_name():
+#     """
+#     Handles form submission to update the user's name in the session.
+#     Flashes a message if the name is changed.
+#
+#     :return: If form is submitted and valid, redirects to the same page. Otherwise, renders the form.
+#
+#     """
+#     form = NameForm()
+#
+#     if form.validate_on_submit():
+#         old_name = session.get('name')
+#
+#         if old_name is not None and old_name != form.name.data:
+#             flash("Well, that's new name")
+#
+#         session['name'] = form.name.data
+#         return redirect(url_for('main.check_name'))
+#
+#     return render_template('index_dwa.html', form=form, name=session.get('name'))
 
 
 # endpoint for handling contact form. It should send email to Admin with information about new user.

@@ -1,4 +1,4 @@
-Dear {{ admin.name }},
+Dear {{ my_user.name }},
 
 Welcome to my business card!
 
