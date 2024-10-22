@@ -7,8 +7,6 @@ from app import db
 from app.main.utils.utils import send_email
 from sqlalchemy.exc import IntegrityError
 
-from .utils.utils import admin_required
-
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -28,7 +26,6 @@ def login():
 
     if form.validate_on_submit():
         my_user =  Admin.query.filter_by(email=form.email.data).first()
-        # my_user = User.query.filter_by(email=form.email.data).first()
         if my_user is None:
             my_user = User.query.filter_by(email=form.email.data).first()
 

@@ -8,7 +8,7 @@ load_dotenv()
 
 class FlaskSimpleTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app(os.environ.get('FLASK_CONFIG'))
+        self.app = create_app('testingConfigWithDocker')
         self.app_context = self.app.app_context()
         self.app_context.push()
         db.create_all()

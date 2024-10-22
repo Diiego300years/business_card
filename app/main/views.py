@@ -1,6 +1,6 @@
-from flask import render_template, session, flash, redirect, url_for, current_app
+from flask import render_template, session, redirect, url_for, current_app
 from . import main
-from .forms import ProspectDataForm, NameForm
+from .forms import ProspectDataForm
 from app.models.user import User
 from app import db
 from .utils.utils import send_email
@@ -18,7 +18,7 @@ def index():
     return render_template('index.html')
 
 
-# here I'll need to list github projects
+# here I'll need to list gitHub projects
 @main.route('/projects', methods=['GET', 'POST'])
 def handle_projects():
     """
