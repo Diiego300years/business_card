@@ -14,4 +14,4 @@ class User(db.Model, UserBase, UserMixin):
 
 
     def __repr__(self):
-        return f'User(name={self.name}, email={self.email}, message={self.message})'
+        return f'User(concat_number={self.concat_number}, message={self.email}, commentator={self.commentator})'

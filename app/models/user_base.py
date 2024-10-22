@@ -73,8 +73,6 @@ class UserBase:
             print("Token doesn't match user ID")
             return False
 
-        print("chuj powinno działać")
-
         self.confirmed = True
         db.session.add(self)
         return True
