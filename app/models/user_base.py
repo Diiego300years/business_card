@@ -65,7 +65,8 @@ class UserBase:
         except InvalidTokenError:
             print("Invalid token.")
             return False
-        except Exception:
+        except Exception as e:
+            print("sthis happended: ", e)
             return False
 
         # Read identity from sub (default place for holding identity from method create_access_token )
@@ -76,3 +77,10 @@ class UserBase:
         self.confirmed = True
         db.session.add(self)
         return True
+
+    def __repr__(self):
+        return (f'User(name={self.name},'
+                f'email={self.email},'
+                f'added_at={self.added_at},'
+                f'confirmed={self.confirmed},'
+                f'is_account_active={self.is_account_active})')

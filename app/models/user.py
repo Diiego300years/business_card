@@ -11,7 +11,8 @@ class User(db.Model, UserBase, UserMixin):
     message_time = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     commentator = db.Column(db.Boolean, default=False, nullable=False)
 
-
-
     def __repr__(self):
-        return f'User(concat_number={self.concat_number}, message={self.email}, commentator={self.commentator})'
+        return (f'User(concat_number={self.concat_number},'
+                f'repo_link={self.repo_link},'
+                f'message_time={self.message_time},'
+                f'commentator={self.commentator})')
