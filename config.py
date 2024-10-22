@@ -17,6 +17,10 @@ class Config:
     FLASKY_ADMIN = os.environ.get("FLASKY_ADMIN")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+    # Dodatkowo możesz ustawić SameSite, aby ograniczyć użycie ciasteczek do pierwszej domeny
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
     @staticmethod
     def init_app(app):
         pass
@@ -54,6 +58,10 @@ class ProductionConfig(Config):
     FLASKY_ADMIN =  os.environ.get("PROD_FLASKY_ADMIN")
     SQLALCHEMY_DATABASE_URI = os.environ.get('PROD_DATABASE_URL')
 
+
+    # COOKIE
+    # Only for http not js
+    SESSION_COOKIE_HTTPONLY = True
 
     # @classmethod
     # def init_app(cls, app):

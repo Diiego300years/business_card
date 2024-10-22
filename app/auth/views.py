@@ -7,30 +7,37 @@ from app import db
 from app.main.utils.utils import send_email
 from sqlalchemy.exc import IntegrityError
 
+from .utils.utils import admin_required
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Handle user login for both Admin and regular users.
+
+    Checks the submitted email and password against Admin and User records.
+    If valid, logs the user in and redirects them to the next page (or home if none).
+    If invalid, shows an error message and reloads the login page.
+
+    Returns:
+        - Redirect to 'next' or home on success.
+        - Renders the login page with an error message on failure.
+    """
+
     form = LoginForm()
 
     if form.validate_on_submit():
         my_user =  Admin.query.filter_by(email=form.email.data).first()
         # my_user = User.query.filter_by(email=form.email.data).first()
-        print("anonymus: ", current_user.is_anonymous)
-        print("odkryłem ajki jest admin typ oraz treść: ", type(my_user), " oraz treść: ", my_user)
         if my_user is None:
             my_user = User.query.filter_by(email=form.email.data).first()
 
 
         if my_user is not None and my_user.check_password(password=form.password.data):
-            print("tutaj działa")
-            print(login_user(my_user, form.remember_me.data))
-            print(current_user.is_authenticated)
-            print("anonymus: ",current_user.is_anonymous)
+            login_user(my_user, form.remember_me.data)
             go_next = request.args.get('next')
 
-            print('a moje go next to: ', go_next)
             if go_next is None or not go_next.startswith('/'):
-                print("przekierowuje do main.index")
                 go_next = url_for('main.index')
             return redirect(go_next)
         else:
@@ -99,29 +106,26 @@ def register():
 def confirm(token):
     try:
         if current_user.confirmed:
-            print("już jest POTWIERDZONY")
             return redirect(url_for('main.index'))
         try:
 
             if current_user.confirm_token(token):
                 db.session.commit()
-                print("działa potwierdzenie")
                 flash('You confirmed your account! Thank you.')
             else:
-                print("nie działa wgl potwierdzenie")
                 flash('Link address is not correct')
-        except:
-            print("teraz coś tez bobki BOBKI")
+        except Exception as e:
+            print("teraz coś tez bobki BOBKI z: ", e)
     except Exception as e:
-        print("bobki gdzieś w ", e)
-    print("nie DZIAŁA CONFIRM")
+        print("nie DZIAŁA confirm(token)", e)
     return redirect(url_for('main.index'))
 
 @auth.route('/logout')
 @login_required
 def logout():
+    user_name = current_user.name
     logout_user()
-    flash('Bye')
+    flash(f'Bye {user_name}')
     return redirect(url_for('main.index'))
 
 
@@ -135,10 +139,8 @@ def before_request():
 
 @auth.route('/unconfirmed')
 def unconfirmed():
-    print(current_user.confirmed)
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    print(" o co chodzi")
     return render_template('auth/unconfirmed.html')
 
 
@@ -152,7 +154,8 @@ def resend_confirmation():
     flash('New email has been sent.')
     return redirect(url_for('main.index'))
 
-@auth.route('/secret')
-@login_required
-def secret():
-    return 'Nice!'
+# @auth.route('/secret')
+# @login_required
+# @admin_required
+# def secret():
+#     return 'Nice!'
