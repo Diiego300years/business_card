@@ -12,27 +12,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('main.index') }}">Home</a>
-            <a class="navbar-brand" href="{{ url_for('main.handle_projects') }}">My projects</a>
-            <a class="navbar-brand" href="{{ url_for('main.contact_handle') }}">Contact form</a>
+            <a class="navbar-brand" href="{{ url_for('cms.cms_about_me') }}">Edit home</a>
+            <a class="navbar-brand" href="{{ url_for('cms.description_about_me') }}">Edit projects</a>
+            <a class="navbar-brand" href="{{ url_for('cms.change_photo') }}">Edit faq form</a>
 
         </div>
         <div>
 {#    login form below#}
          <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
-                {% if is_admin  %}
-                    <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
-                    <li><a href="{{ url_for('admin.index') }}">Admin panel</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+                <li><a href="{{ url_for('main.index') }}">Check home</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
-                 {% endif %}
-            {% else %}
-                <a class="navbar-text" href="{{ url_for('auth.login') }}">Log in</a>
-                <a class="navbar-text" href=" {{ url_for('auth.register') }}">Register</a>
+                    <a class="navbar-text" href="{{ url_for('auth.login') }}">Log in</a>
+                    <a class="navbar-text" href="{{ url_for('auth.register') }}">Register</a>
             {% endif %}
         </ul>
         </div>
+
     </div>
 </div>
 {% endblock %}

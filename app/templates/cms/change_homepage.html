@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Editor</title>
+    <!-- TinyMCE CDN -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#description',  // Id pola textarea
+            plugins: 'lists link image code',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlist outdent indent | removeformat | code',
+            branding: false,  // Wyłącza branding TinyMCE
+            height: 300,  // Wysokość pola edycji
+        });
+    </script>
+</head>
+
+
+<!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/TINY_KEY/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: [
+      // Core editing features
+      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace',
+        'table', 'visualblocks', 'wordcount',
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | ' +
+        'link image media table mergetags | addcomment showcomments | ' +
+        'spellcheckdialog a11ycheck typography | align lineheight | checklist ' +
+        'numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+  });
+</script>
+<textarea>
+  Welcome to TinyMCE!
+</textarea>
+
+
+
+<body>
+    <h1>Edytor HomeEditor</h1>
+    <form method="POST" action="{{ url_for('cms.description_about_me') }}">
+        <div>
+            <label for="title">Tytuł:</label>
+            <input type="text" id="title" name="title" value="{{ home_editor.title }}">
+        </div>
+
+        <div>
+            <label for="description">Opis:</label>
+            <!-- To jest pole textarea, które będzie podpięte do TinyMCE -->
+            <textarea id="description" name="description">{{ home_editor.description }}</textarea>
+        </div>
+
+        <div>
+            <input type="submit" value="Zapisz">
+        </div>
+    </form>
+</body>
+</html>

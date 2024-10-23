@@ -5,6 +5,9 @@ from app.models.user import User
 from app import db
 from .utils.utils import send_email
 from datetime import datetime
+from flask_login import current_user
+
+from ..models import Admin
 
 
 # home root for about me probably
@@ -110,3 +113,7 @@ def contact_handle():
                            name=session.get('name'),
                            current_time=datetime.utcnow())
 
+@main.context_processor
+def inject_user_role():
+    is_admin = isinstance(current_user, Admin) if current_user.is_authenticated else False
+    return {'is_admin': is_admin}

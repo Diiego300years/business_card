@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+    Business card admin panel
+{% endblock %}
+
+{% block head_css %}
+{#    keeps old and allow to add ourself#}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/admin/custom_admin.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block main_menu %}
+    <ul class="nav navbar-nav">
+{#    Below is function for registered views#}
+        {{ layout.menu() }}
+{#        Below is my custom #}
+        <li><a href="{{ url_for('cms.description_about_me') }}">Custom description</a></li>
+
+    </ul>
+    <div>
+{#    login form below#}
+         <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+                <li><a href="{{ url_for('main.index') }}">Check home</a></li>
+                {% else %}
+                    <a class="navbar-text" href="{{ url_for('auth.login') }}">Log in</a>
+                    <a class="navbar-text" href="{{ url_for('auth.register') }}">Register</a>
+            {% endif %}
+        </ul>
+        </div>
+{% endblock %}

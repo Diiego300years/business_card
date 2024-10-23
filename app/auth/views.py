@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, flash, redirect, current_app
+from flask import render_template, request, url_for, flash, redirect, current_app, session
 from . import auth
 from flask_login import login_required, login_user, logout_user, current_user
 from .forms import LoginForm, RegistrationForm
@@ -31,6 +31,7 @@ def login():
 
 
         if my_user is not None and my_user.check_password(password=form.password.data):
+
             login_user(my_user, form.remember_me.data)
             go_next = request.args.get('next')
 
