@@ -47,7 +47,6 @@ class UserBase:
 
         token = create_access_token(identity=self.id, expires_delta=expires_delta)
 
-
         return token
 
     def confirm_token(self, token):

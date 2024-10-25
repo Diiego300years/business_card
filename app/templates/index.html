@@ -9,4 +9,11 @@
     </h1>
 </div>
 
+    {% if empty_base %}
+    <div id="title"> Title: {{ title }}</div>
+    <div> Description: {{ description }}</div>
+    <div> Added at: {{ added_at }}</div>
+    {% else %}<div> Choose your description in Admin panel. </div>
+    {% endif %}
+
 {% endblock %}

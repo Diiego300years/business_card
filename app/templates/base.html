@@ -37,17 +37,18 @@
 </div>
 {% endblock %}
 
+{% block styles %}
+    {{ super() }}
+    <!-- My css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main/index.css') }}">
+{% endblock %}
 
 {% block content %}
-    <div class="container">
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-
-    {% block page_content %} {% endblock %}
+<div class="content_container">
+    <!-- Main page content, will be responsive -->
+    <div class="col-8 col-md-10 col-lg-12">
+        {% block page_content %} {% endblock %}
+    </div>
 </div>
 {% endblock %}
 

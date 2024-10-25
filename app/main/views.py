@@ -1,4 +1,4 @@
-from flask import render_template, session, redirect, url_for, current_app
+from flask import render_template, session, redirect, url_for, current_app, flash
 from . import main
 from .forms import ProspectDataForm
 from app.models.user import User
@@ -8,6 +8,7 @@ from datetime import datetime
 from flask_login import current_user
 
 from ..models import Admin
+from app.models.cms.home_editor import HomeEditor
 
 
 # home root for about me probably
@@ -18,7 +19,20 @@ def index():
 
     :return: Rendered template for the home page.
     """
-    return render_template('index.html')
+    home_data = HomeEditor.query.first()
+
+    if home_data:
+        empty_base = True
+        data = {
+            'title': home_data.title,
+            'description': home_data.description,
+            'added_at': home_data.added_at,
+            'empty_base': empty_base
+        }
+        return render_template('index.html', **data)
+
+    empty_base=False
+    return render_template('index.html', empty_base=empty_base)
 
 
 # here I'll need to list gitHub projects
@@ -117,3 +131,5 @@ def contact_handle():
 def inject_user_role():
     is_admin = isinstance(current_user, Admin) if current_user.is_authenticated else False
     return {'is_admin': is_admin}
+
+
