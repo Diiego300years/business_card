@@ -1,0 +1,67 @@
+.page-header {
+    text-align: center;
+    font-size: 2em;
+    color: #017fb1;
+}
+
+#title {
+    font-weight: bold;
+    color: #1e90ff;
+}
+
+/*div {*/
+/*    margin: 10px 0;*/
+/*    padding: 10px;*/
+/*    font-family: Arial, sans-serif;*/
+/*}*/
+/* Styl ogólny dla paska nawigacyjnego */
+.navbar {
+    background-color: #333; /* Ciemne tło */
+    border-radius: 0; /* Usuń zaokrąglenia */
+    margin-bottom: 0; /* Brak odstępu poniżej */
+}
+
+/* Kolor linków w navbarze */
+.navbar .navbar-brand,
+.navbar .navbar-nav > li > a {
+    color: #f4f4f4; /* Kolor jasny */
+    font-size: 1.1em; /* Lekko powiększony tekst */
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-nav > li > a:hover {
+    color: #1e90ff; /* Kolor po najechaniu */
+}
+
+/* Przycisk nawigacji (widoczny na mniejszych ekranach) */
+.navbar .navbar-toggle {
+    background-color: #444; /* Tło przycisku */
+    border: none; /* Bez obramowania */
+}
+
+.navbar .navbar-toggle .icon-bar {
+    background-color: #fff; /* Białe paski */
+}
+
+/* Nawigacja po prawej stronie */
+.navbar .navbar-nav {
+    float: right;
+}
+
+/* Tekst w navbarze */
+.navbar .navbar-text {
+    color: #f4f4f4;
+    padding-right: 15px; /* Odstęp po prawej */
+}
+
+.navbar .navbar-text:hover {
+    color: #1e90ff; /* Kolor po najechaniu */
+}
+
+/*.content_container {*/
+/*    background-color: #0a6ebd;*/
+/*    text-align: center;*/
+/*    font-size: 1em;*/
+/*}*/
+/* Przykład własnego stylu dla content_container */
+

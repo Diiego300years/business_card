@@ -15,6 +15,14 @@
     <h1> Hi {% if current_user.name %} {{ current_user.name }} {% else %} stranger! {% endif %}
     </h1>
 </div>
+
+    {% if empty_base %}
+    <div id="title"> Title: {{ title }}</div>
+    <div> Description: {{ description }}</div>
+    <div> Added at: {{ added_at }}</div>
+    {% else %}<div> Choose your description in Admin panel. </div>
+    {% endif %}
+
 <div class="home_container">
     <p>My paragraph</p>
     <p>Second paragraph</p>
