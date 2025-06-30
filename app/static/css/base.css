@@ -1,12 +1,15 @@
-.page-header {
-    text-align: center;
-    font-size: 2em;
-    color: #017fb1;
+/* Opcja 1: Profesjonalna */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+ background-color: rgb(201, 76, 76);
+
 }
 
-#title {
-    font-weight: bold;
-    color: #1e90ff;
+h1, h2, h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
 }
 
 /*div {*/
@@ -64,4 +67,31 @@
 /*    font-size: 1em;*/
 /*}*/
 /* Przykład własnego stylu dla content_container */
+
+
+
+
+/* nowe z 30.06 pod grid
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". . prawa góra"
+    "dsdsd . ."
+    ". . .";
+}
+*/
+#my_brand {
+ margin: 4fr;
+ padding: 4fr;
+ font-size: 24px;
+ font-weight: bold;
+ padding-left: 30fr;
+}
+
+#my_brand:hover {
+    color: white; /* Zawsze czerwony, nawet po najechaniu */
+}
 

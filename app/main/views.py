@@ -1,6 +1,7 @@
 from flask import render_template, session, redirect, url_for, current_app
 from . import main
 from .forms import ProspectDataForm
+from ..models.cms.home_editor import HomeEditor
 from ..models.user import User
 from app import db
 from .utils.utils import send_email
@@ -17,7 +18,23 @@ def index():
 
     :return: Rendered template for the home page.
     """
-    return render_template('index.html')
+    empty_base = False
+    try:
+        home_data = HomeEditor.query.first()
+
+        if home_data:
+            empty_base = True
+            data = {
+                'title': home_data.title,
+                'description': home_data.description,
+                'added_at': home_data.added_at,
+                'empty_base': empty_base
+            }
+            return render_template('index.html', **data)
+        else:
+            return render_template('index.html', empty_base=empty_base)
+    except:
+        return render_template('index.html', empty_base=empty_base)
 
 
 # here I'll need to list gitHub projects

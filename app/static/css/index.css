@@ -1,3 +1,12 @@
-body {
-    background-color: red;
+.page-header {
+    text-align: center;
+    font-size: 2em;
+    color: #f4f4f4;
+    font-weight: bold
+}
+
+#title {
+    font-weight: bold;
+    color: #1e90ff;
+    text-align: center;
 }
