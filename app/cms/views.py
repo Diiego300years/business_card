@@ -4,13 +4,13 @@ from app import db
 from app.models.cms.home_editor import HomeEditor
 from . import cms
 
-@login_required
 @cms.route('/choose-option', methods=['GET', 'POST'])
+@login_required
 def cms_about_me():
     return render_template('cms/homedit.html')
 
-@login_required
 @cms.route('/edit-description', methods=['GET', 'POST'])
+@login_required
 def description_about_me():
     if request.method == 'POST':
         title = request.form['title']
@@ -30,8 +30,8 @@ def description_about_me():
     return render_template('cms/change_homepage.html', home_editor=home_editor)
 
 
-@login_required
 @cms.route('/change_photo', methods=['GET', 'POST'])
+@login_required
 def change_photo():
     # logic xD
     if request.method == 'POST':

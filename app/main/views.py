@@ -1,13 +1,12 @@
 from flask import render_template, session, redirect, url_for, current_app
 from . import main
 from .forms import ProspectDataForm
-from app.models.user import User
+from ..models.user import User
 from app import db
 from .utils.utils import send_email
 from datetime import datetime
 from flask_login import current_user
-
-from ..models import Admin
+from ..models.admin import Admin
 
 
 # home root for about me probably
@@ -30,8 +29,11 @@ def handle_projects():
 
     :return: Rendered template for the projects page with the user's name.
     """
-    user_name = session.get('name')
-    return render_template('projects.html', name=user_name)
+    if session.get('name'):
+        user_name = session.get('name')
+        return render_template('projects.html', name=user_name)
+    else:
+        return render_template('projects.html')
 
 
 # simple endpoint for try flash()
@@ -79,25 +81,23 @@ def contact_handle():
         if user is None:
             # adding new user
             user = User(name=form.name.data,
-                                email=form.e_mail.data,
-                                message=form.message.data
+                        email=form.e_mail.data.lower(),
+                        message=form.message.data,
+                        password = "YourPassword#1234"
                                 )
             db.session.add(user)
             db.session.commit()
             session['known'] = False
 
-            # Remember about using current_app !
-            if current_app.config['FLASKY_ADMIN']:
+            token = user.generate_confirmation_token()
+            send_email(
+                user.email,
+                'Utwórz konto jeśli chcesz!',
+                'mail/invitation',
+                user=user,
+                token=token,
+            )
 
-                #email for prospect
-                send_email(form.e_mail.data, '- z mojej apki Business card',
-                           'mail/welcome_user',
-                           user=user)
-
-                #email for admin
-                send_email(current_app.config['FLASKY_ADMIN'], '- z mojej apki Business card',
-                           'mail/new_user',
-                           user=user)
         else:
             #TODO: It's useless for now. I must change it
             session['known'] = True
@@ -108,9 +108,10 @@ def contact_handle():
 
     # TODO: Think about what should I do with session['name']
     # print(session['name'])
+    user_name = session.get('name')
     return render_template('contact.html',
                            form=form,
-                           name=session.get('name'),
+                           name=user_name,
                            current_time=datetime.utcnow())
 
 @main.context_processor

@@ -1,8 +1,7 @@
 from flask import render_template, request, url_for, flash, redirect, current_app, session
 from . import auth
 from flask_login import login_required, login_user, logout_user, current_user
-from .forms import LoginForm, RegistrationForm
-from app.models import User, Admin
+from .forms import LoginForm, RegistrationForm, User, Admin
 from app import db
 from app.main.utils.utils import send_email
 from sqlalchemy.exc import IntegrityError

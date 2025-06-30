@@ -17,7 +17,6 @@ class Config:
     FLASKY_ADMIN = os.environ.get("FLASKY_ADMIN")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
     # Dodatkowo możesz ustawić SameSite, aby ograniczyć użycie ciasteczek do pierwszej domeny
     SESSION_COOKIE_SAMESITE = 'Lax'
 
@@ -25,14 +24,10 @@ class Config:
     def init_app(app):
         pass
 
-
 class DevelopmentConfig(Config):
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP=os.environ.get('FLASK_APP')
-
-    #docker update
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
-
     SQLALCHEMY_RECORD_QUERIES = True
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50
@@ -44,37 +39,29 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
     # WTF_CSRF_ENABLED = False
 
-
 class ProductionConfig(Config):
+    """
+    Class prepared for production on small
+    """
     FLASK_ENV = 'production'
     FLASK_APP=os.environ.get('FLASK_APP')
-
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
     MAIL_SERVER = os.environ.get('PROD_MAIL_SERVER')
     MAIL_PORT =  os.environ.get('PROD_MAIL_PORT')
     FLASKY_MAIL_SENDER = os.environ.get("PROD_FLASKY_MAIL_SENDER")
     MAIL_USERNAME =  os.environ.get('PROD_MAIL_USERNAME')
     MAIL_PASSWORD =  os.environ.get('PROD_MAIL_PASSWORD')
-
     FLASKY_ADMIN =  os.environ.get("PROD_FLASKY_ADMIN")
     SQLALCHEMY_DATABASE_URI = os.environ.get('PROD_DATABASE_URL')
 
-
-    # COOKIE
-    # Only for http not js
-    SESSION_COOKIE_HTTPONLY = True
-
-    # @classmethod
-    # def init_app(cls, app):
-    #     Config.init_app(app)
-
-
-########################################## Docker ###############################################
+"""
+ ------------------------------ Docker begins ----------------------------------------
+"""
 
 class DevelopmentConfigWithDocker(Config):
     FLASK_ENV = 'default'
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
-
     SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
 
 class TestingConfigWithDocker(Config):
@@ -86,8 +73,6 @@ class TestingConfigWithDocker(Config):
     FLASK_APP = os.environ.get('FLASK_APP')
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_TEST_SQLALCHEMY_DATABASE_URI')
-
-
 
 config = {
     'development': DevelopmentConfig,

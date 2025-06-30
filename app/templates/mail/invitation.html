@@ -1,0 +1,18 @@
+<html>
+<body>
+    <p>Witaj <strong>{{ user.name }}</strong>,</p>
+    <p>Dziękuje za zapytanie na naszej stronie. Poniżej znajdują się Twoje dane:</p>
+    <ul>
+        <li>Imię: {{ user.name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>Wiadomość od Ciebie: {{ user.message }}</li>
+        <li>Twoje hasło do zalogowania się: YourPassword#1234</li>
+    </ul>
+    <p> W celu aktywacji konta, proszę kliknąć link: <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">
+    click here</a>.</p>
+    <p>Drugą opcją jest wklejenie podanego poniżej linku do paska przeglądarki:</p>
+    <p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+
+    <p>Z pozdrowieniami,<br>Marcin.</p>
+</body>
+</html>

@@ -20,7 +20,6 @@ services:
   # dev db
   db:
     image: postgres:13
-    container_name: flask_db
     ports:
       - "5432:5432"
     env_file:

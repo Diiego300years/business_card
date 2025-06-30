@@ -1,0 +1,16 @@
+Witaj {{ user.name }}
+
+Dziękuje za zapytanie na naszej stronie. Poniżej znajdują się Twoje dane:
+
+        Imię: {{ user.name }}
+        Email: {{ user.email }}
+        Wiadomość od Ciebie: {{ user.message }}
+        Twoje hasło do zalogowania się: YourPassword#1234
+
+    W celu aktywacji konta, proszę kliknąć link: {{ url_for('auth.confirm', token=token, _external=True) }}"
+    Drugą opcją jest wklejenie podanego poniżej linku do paska przeglądarki:
+    {{ url_for('auth.confirm', token=token, _external=True) }}
+
+Z pozdrowieniami,
+          Marcin
+

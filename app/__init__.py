@@ -1,7 +1,6 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user
 from flask_pagedown import PageDown
 from flask_wtf import CSRFProtect
 from flask_migrate import Migrate
@@ -25,19 +24,15 @@ migrate = Migrate()
 moment = Moment()
 csrf = CSRFProtect()
 pagedown = PageDown()
-login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
 
 # I decided to use several configuration sets
 def create_app(config_name):
-    config_name = os.getenv('FLASK_CONFIG', 'default')
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
     bcrypt.init_app(app)
     moment.init_app(app)
-    login_manager.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
@@ -47,9 +42,13 @@ def create_app(config_name):
     jwt.init_app(app)
     admin.init_app(app)
 
+    from .auth.login_manager import login_manager
+    login_manager.init_app(app)
+
     # add view to flask-admin
-    from app.models.cms.home_editor import HomeEditor
+    from app.models.cms.home_editor import HomeEditor, ProjectsEditor
     admin.add_view(AdminModelView(HomeEditor, db.session))
+    admin.add_view(AdminModelView(ProjectsEditor, db.session, name="Projects Editor"))
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
