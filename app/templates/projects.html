@@ -9,4 +9,46 @@
             https://github.com/Diiego300years {% else %} stranger, check my projects: https://github.com/Diiego300years{% endif %}</h1>
     </div>
 </div>
+
+
+<div class="container">
+    <div class="page-header" style="border: 0px;">
+        <h1>Cześć </h1>
+        {% if current_user.is_authenticated %}
+                <div class="row">
+        {% for name in projects  %}
+
+                  <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                      <img src="..." alt="{{name.repo_link}}">
+                      <div class="caption">
+                        <h3> {{name.project_name}}</h3>
+                        <p>{{name.description}}</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+
+                </div>
+            {% else %}
+
+        mój odwiedzający. Poniżej przedstawiam moje główne projekty:
+                <div class="row">
+        {% for name in projects  %}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="..." alt="{{name.repo_link}}">
+                            <div class="caption">
+                                <h3> {{name.project_name}}</h3>
+                                <p>{{name.description}}</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

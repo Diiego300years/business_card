@@ -21,14 +21,6 @@ class AdminModelView(ModelView):
         # if he's not admin...
         return redirect(url_for('auth.login', next=request.url))
 
-    # @expose('/option1')
-    # def option1(self):
-    #     return self.render('admin/homeeditor_option1.html')
-    #
-    # # Dodatkowa opcja 2
-    # @expose('/option2')
-    # def option2(self):
-    #     return self.render('admin/homeeditor_option2.html')
 
 class HomeEditorAdminView(AdminModelView):
     column_searchable_list = ['title']
@@ -49,3 +41,23 @@ class HomeEditorAdminView(AdminModelView):
         # Dodajemy klucz tylko do wywołania renderowania tego widoku
         kwargs['tinymce_api_key'] = os.getenv('TINYMCE_API_KEY')
         return super().render(template, **kwargs)
+
+
+# class ProjectsEditorAdminView(AdminModelView):
+#     column_searchable_list = ['title']
+#
+#     form_overrides = {
+#         'content': TextAreaField
+#     }
+#
+#     # orm_widget_args = {
+#     #     'description': {
+#     #         'class': 'tinymce'
+#     #     }
+#     # }
+#     create_template = 'admin/edit_projects.html'
+#     edit_template = 'admin/edit_projects.html'
+#
+#     def render(self, template, **kwargs):
+#         # Dodajemy klucz tylko do wywołania renderowania tego widoku
+#         return super().render(template, **kwargs)

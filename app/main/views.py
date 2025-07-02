@@ -1,7 +1,7 @@
 from flask import render_template, session, redirect, url_for, current_app
 from . import main
 from .forms import ProspectDataForm
-from ..models.cms.home_editor import HomeEditor
+from ..models.cms.home_editor import HomeEditor, ProjectsEditor
 from ..models.user import User
 from app import db
 from .utils.utils import send_email
@@ -46,11 +46,23 @@ def handle_projects():
 
     :return: Rendered template for the projects page with the user's name.
     """
-    if session.get('name'):
-        user_name = session.get('name')
-        return render_template('projects.html', name=user_name)
-    else:
-        return render_template('projects.html')
+    empty_base = False
+    try:
+        projects_data = ProjectsEditor.query.first()
+
+        if projects_data:
+            empty_base = True
+            data = {
+                'project_name': projects_data.project_name,
+                'description': projects_data.description,
+                'added_at': projects_data.repo_link
+            }
+            projects = ProjectsEditor.query.all()
+            return render_template('projects.html', **data,projects=projects)
+        else:
+            return render_template('projects.html', empty_base=empty_base)
+    except:
+        return render_template('projects.html', empty_base=empty_base)
 
 
 # simple endpoint for try flash()
