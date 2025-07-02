@@ -1,28 +1,12 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
-from flask_pagedown import PageDown
-from flask_wtf import CSRFProtect
-from flask_migrate import Migrate
-from flask_mail import Mail
-from flask_moment import Moment
 from app.admin import AdminModelView, HomeEditorAdminView
 from config import config
-from flask_bcrypt import Bcrypt
 import os
-from flask_jwt_extended import JWTManager
 from app.admin import admin
 from app.admin.views import MyAdminIndexView
+from app.extensions import db, bcrypt, bootstrap, mail, moment, csrf, pagedown, migrate, jwt
 
-jwt = JWTManager()
-bcrypt = Bcrypt()
-bootstrap = Bootstrap()
-mail = Mail()
-db = SQLAlchemy()
-migrate = Migrate()
-moment = Moment()
-csrf = CSRFProtect()
-pagedown = PageDown()
+
 
 # I decided to use several configuration sets
 def create_app(config_name):
@@ -55,6 +39,9 @@ def create_app(config_name):
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+    # global .env
+    # app.jinja_env.globals['tinymce_api_key'] = os.getenv('TINYMCE_API_KEY')
 
 
     return app

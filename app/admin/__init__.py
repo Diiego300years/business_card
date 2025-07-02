@@ -3,8 +3,11 @@ from flask import redirect, url_for, request
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from wtforms import TextAreaField
-
 from .views import MyAdminIndexView
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 admin = Admin(name='My CMS Admin', template_mode='bootstrap3', index_view=MyAdminIndexView(), base_template='admin/index.html')
 
@@ -40,3 +43,9 @@ class HomeEditorAdminView(AdminModelView):
     }
     create_template = 'admin/edit_with_tinymce.html'
     edit_template = 'admin/edit_with_tinymce.html'
+
+    # nadpisanie metod create oraz edit
+    def render(self, template, **kwargs):
+        # Dodajemy klucz tylko do wywołania renderowania tego widoku
+        kwargs['tinymce_api_key'] = os.getenv('TINYMCE_API_KEY')
+        return super().render(template, **kwargs)

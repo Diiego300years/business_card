@@ -1,5 +1,5 @@
 import datetime
-from app import db
+from app.extensions import db
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 

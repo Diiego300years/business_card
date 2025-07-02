@@ -1,5 +1,5 @@
 import datetime
-from app import db, bcrypt
+from app.extensions import db, bcrypt
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 from flask_jwt_extended import create_access_token, decode_token
