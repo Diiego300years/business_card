@@ -12,14 +12,17 @@
 {% block page_content %}
 <body>
 <div class="page-header">
-    <h1> Cześć {% if current_user.name %} {{ current_user.name }} {% else %} nieznajomy! {% endif %}
+    <h1>
+        Cześć {% if current_user.name %} {{ current_user.name }} {% else %} nieznajomy! {% endif %}
     </h1>
 </div>
-
+<!-- description|safe   safe, anyway it's escaping html-->
     {% if empty_base %}
-    <div id="title"> Title: {{ title }}</div>
-    <div> Description: {{ description }}</div>
-    <div> Added at: {{ added_at }}</div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="title"> {{ title }}</div>
+        <div class="panel-body">{{ description|safe }}</div>
+        <div id="my_date"> Added at: {{ added_at }}</div>
+        </div>
     {% else %}<div> Choose your description in Admin panel. </div>
     {% endif %}
 

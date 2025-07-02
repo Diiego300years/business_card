@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
+    <div class="page-header" style="border: 0px;">
         <h1>Hi{% if current_user.is_authenticated %} {{ current_user.name }} check my projects:
             https://github.com/Diiego300years {% else %} stranger, check my projects: https://github.com/Diiego300years{% endif %}</h1>
     </div>

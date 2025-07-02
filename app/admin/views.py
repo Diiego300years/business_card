@@ -2,6 +2,11 @@ from flask_admin import AdminIndexView
 from flask_admin import expose
 from flask_login import current_user
 from flask import redirect, url_for, request
+from dotenv import load_dotenv
+from app.models.user import User
+import os
+
+load_dotenv()
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -15,6 +20,8 @@ class MyAdminIndexView(AdminIndexView):
 
     @expose('/')
     def index(self):
-        # cuz index is my base
-        return self.render('admin/home.html')
-
+        TINYMCE_API_KEY = os.getenv('TINYMCE_API_KEY')
+        stats = {
+            'users': User.query.count(),
+        }
+        return self.render('admin/home.html', tinymce_api_key=TINYMCE_API_KEY)

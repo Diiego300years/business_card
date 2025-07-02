@@ -6,14 +6,13 @@ from flask_wtf import CSRFProtect
 from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_moment import Moment
-from app.admin import AdminModelView
+from app.admin import AdminModelView, HomeEditorAdminView
 from config import config
 from flask_bcrypt import Bcrypt
 import os
 from flask_jwt_extended import JWTManager
 from app.admin import admin
 from app.admin.views import MyAdminIndexView
-
 
 jwt = JWTManager()
 bcrypt = Bcrypt()
@@ -47,17 +46,15 @@ def create_app(config_name):
 
     # add view to flask-admin
     from app.models.cms.home_editor import HomeEditor, ProjectsEditor
-    admin.add_view(AdminModelView(HomeEditor, db.session))
+    # admin.add_view(AdminModelView(HomeEditor, db.session))
     admin.add_view(AdminModelView(ProjectsEditor, db.session, name="Projects Editor"))
+    admin.add_view(HomeEditorAdminView(HomeEditor, db.session, name="Home Editor"))
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
-
-    from .cms import cms as cms_blueprint
-    app.register_blueprint(cms_blueprint, url_prefix='/cms')
 
 
     return app

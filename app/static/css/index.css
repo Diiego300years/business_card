@@ -6,7 +6,12 @@
 }
 
 #title {
+    margin-top: 5vh;
     font-weight: bold;
     color: #1e90ff;
     text-align: center;
+}
+
+#my_date{
+    text-align: right;
 }

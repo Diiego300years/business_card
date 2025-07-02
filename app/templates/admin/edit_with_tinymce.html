@@ -1,0 +1,14 @@
+{% extends 'admin/model/edit.html' %}
+{% block tail %}
+    {{ super() }}
+    <script src="https://cdn.tiny.cloud/1/{{ tinymce_api_key }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: 'textarea.tinymce',
+        menubar: false,
+        plugins: 'link lists code',
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link | code',
+        height: 400
+      });
+    </script>
+{% endblock %}
